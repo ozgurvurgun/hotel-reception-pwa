@@ -1,0 +1,29 @@
+name = "golden-gate-reception"
+main = "src/index.ts"
+compatibility_date = "2024-11-01"
+compatibility_flags = ["nodejs_compat"]
+# account_id = "<YOUR_CLOUDFLARE_ACCOUNT_ID>"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "golden-gate-db"
+database_id = "<YOUR_D1_DATABASE_ID>"
+
+[[durable_objects.bindings]]
+name = "LIVE_DESK"
+class_name = "LiveDesk"
+
+[[migrations]]
+tag = "v1-live-desk"
+new_sqlite_classes = ["LiveDesk"]
+
+[vars]
+ROOT_USERNAME = "admin"
+VAPID_PUBLIC_KEY = "<YOUR_VAPID_PUBLIC_KEY>"
+VAPID_SUBJECT = "mailto:you@example.com"
+
+# ROOT_PASSWORD, JWT_SECRET, VAPID_PRIVATE_KEY → Cloudflare Secrets (.dev.vars locally)

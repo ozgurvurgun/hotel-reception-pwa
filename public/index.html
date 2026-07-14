@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#F2F2F7" id="theme-color-meta">
+  <title>Golden Gate İstanbul</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="/icons/icon-167.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152.png">
+  <link rel="stylesheet" href="/css/app.css">
+  <script>
+    (function () {
+      var html = document.documentElement;
+      var hasToken = !!localStorage.getItem('token');
+      html.classList.add('auth-boot', hasToken ? 'auth-has-token' : 'auth-no-token');
+      var theme = hasToken ? '#F2F2F7' : '#FFFFFF';
+      html.style.backgroundColor = theme;
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', theme);
+    })();
+  </script>
+</head>
+<body>
+  <div id="toast" class="toast"></div>
+
+  <!-- Login -->
+  <div id="login-page" class="login-page">
+    <div class="login-hero" aria-hidden="true">
+      <div class="login-hero-blob login-hero-blob-1"></div>
+      <div class="login-hero-blob login-hero-blob-2"></div>
+      <div class="login-hero-scene">
+        <div class="login-hero-device">
+          <div class="login-hero-device-screen">
+            <img src="/icons/icon-128.png" alt="" width="56" height="56">
+          </div>
+        </div>
+        <div class="login-hero-badge">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="login-body">
+      <h1 class="login-heading">Sign in</h1>
+      <p class="login-lead">Sign in to continue.</p>
+
+      <form id="login-form" class="login-form">
+        <div class="login-field">
+          <span class="login-field-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+          <input type="text" id="login-username" autocomplete="username" required placeholder="Username">
+        </div>
+
+        <div class="login-field">
+          <span class="login-field-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </span>
+          <input type="password" id="login-password" autocomplete="current-password" required placeholder="Password">
+          <button type="button" class="login-field-toggle" id="login-toggle-pwd" aria-label="Show password">
+            <svg class="icon-eye-off" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>
+            <svg class="icon-eye hidden" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+
+        <button type="submit" class="btn btn-login btn-block">Sign in</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- App -->
+  <div id="app" class="hidden">
+    <!-- Home -->
+    <div id="page-home" class="page active content">
+      <div id="shift-banner"></div>
+      <div id="stats-grid" class="stat-grid"></div>
+      <div class="quick-actions" id="quick-actions"></div>
+      <div id="recent-activity"></div>
+    </div>
+
+    <!-- Records -->
+    <div id="page-records" class="page content">
+      <div id="records-content"></div>
+    </div>
+
+    <!-- Search -->
+    <div id="page-search" class="page content">
+      <div class="search-bar">
+        <span class="search-bar-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" class="ui-icon" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+        <input type="search" id="search-input" placeholder="Search guest, room, agency..." autocomplete="off">
+      </div>
+      <div class="search-tabs">
+        <div class="search-tab active" data-type="guests">Guest</div>
+        <div class="search-tab" data-type="rooms">Room</div>
+        <div class="search-tab" data-type="global">All</div>
+      </div>
+      <div class="search-filter-row">
+        <div class="custom-picker" id="search-period-picker">
+          <button type="button" class="picker-trigger" id="search-period-trigger">
+            <span class="picker-trigger-label" id="search-period-label">All dates</span>
+            <span class="picker-trigger-caret" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="picker-menu" id="search-period-menu"></div>
+        </div>
+      </div>
+      <div id="search-custom-dates-wrap"></div>
+      <div id="search-results"></div>
+    </div>
+
+    <!-- Shifts -->
+    <div id="page-shifts" class="page content">
+      <div class="shifts-filters">
+        <div class="date-range-row">
+          <div class="form-group">
+            <label class="form-label">From</label>
+            <input type="date" id="shifts-date-from">
+          </div>
+          <div class="form-group">
+            <label class="form-label">To</label>
+            <input type="date" id="shifts-date-to">
+          </div>
+        </div>
+      </div>
+      <div id="shifts-list"></div>
+    </div>
+
+    <!-- More -->
+    <div id="page-more" class="page content">
+      <div id="more-content"></div>
+    </div>
+
+    <!-- Tab Bar -->
+    <nav class="tab-bar" id="tab-bar">
+      <div class="sidebar-brand">
+        <img src="/icons/icon-128.png" alt="" width="36" height="36">
+        <div class="sidebar-brand-text">
+          <span class="sidebar-brand-title">Golden Gate</span>
+          <span class="sidebar-brand-sub">Reception</span>
+        </div>
+      </div>
+      <div class="tab-item active" data-page="home">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        Home
+      </div>
+      <div class="tab-item" data-page="records">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        Records
+      </div>
+      <div class="tab-item" data-page="search">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 10.5 5 15 7.01 15 9.5 12.99 14 10.5 14z"/></svg>
+        Search
+      </div>
+      <div class="tab-item" data-page="shifts">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+        Shifts
+      </div>
+      <div class="tab-item" data-page="more">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        More
+      </div>
+    </nav>
+  </div>
+
+  <!-- Sheet Modal -->
+  <div id="sheet-overlay" class="sheet-overlay">
+    <div class="sheet" id="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <button class="btn-ghost" id="sheet-cancel">Cancel</button>
+        <span class="sheet-title" id="sheet-title"></span>
+        <button class="btn-ghost" id="sheet-save" style="font-weight:700">Save</button>
+      </div>
+      <div class="sheet-body" id="sheet-body"></div>
+    </div>
+  </div>
+
+  <!-- Confirm Modal -->
+  <div id="confirm-overlay" class="confirm-overlay">
+    <div class="confirm-dialog" role="alertdialog" aria-modal="true">
+      <div class="confirm-title" id="confirm-title"></div>
+      <div class="confirm-message" id="confirm-message"></div>
+      <div class="confirm-actions">
+        <button class="confirm-btn confirm-cancel" id="confirm-cancel">Cancel</button>
+        <button class="confirm-btn confirm-ok" id="confirm-ok">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Easter Egg -->
+  <div id="easter-egg-overlay" class="easter-egg-overlay hidden">
+    <div class="easter-egg-modal">
+      <div class="easter-egg-player">
+        <div class="easter-egg-cover-wrap">
+          <img src="/easter-egg/cover-dilerim.webp" alt="" class="easter-egg-cover" id="easter-egg-cover">
+          <div class="easter-egg-cover-badges">
+            <button type="button" class="easter-egg-badge easter-egg-badge-bg" id="easter-egg-background" aria-label="Play in background">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+            </button>
+            <button type="button" class="easter-egg-badge easter-egg-badge-close" id="easter-egg-close" aria-label="Close and stop">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6V6z"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="easter-egg-player-body">
+          <div class="easter-egg-now-playing">
+            <div class="easter-egg-track-info">
+              <div class="easter-egg-track-title" id="easter-egg-track-title">Dilerim Ki</div>
+              <div class="easter-egg-track-artist" id="easter-egg-track-artist">Dolu Kadehi Ters Tut</div>
+            </div>
+            <div class="easter-egg-progress-wrap">
+              <div class="easter-egg-scrubber" id="easter-egg-scrubber" role="slider" aria-label="Song position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                <div class="easter-egg-scrubber-rail">
+                  <div class="easter-egg-scrubber-fill" id="easter-egg-scrubber-fill"></div>
+                  <div class="easter-egg-scrubber-knob" id="easter-egg-scrubber-knob"></div>
+                </div>
+              </div>
+              <div class="easter-egg-times">
+                <span id="easter-egg-time-current">0:00</span>
+                <span id="easter-egg-time-total">0:00</span>
+              </div>
+            </div>
+            <div class="easter-egg-controls">
+              <button type="button" class="easter-egg-track-btn" id="easter-egg-prev" aria-label="Previous song">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M6 6h2v12H6V6zm5 6l8.5 6V6L11 12z"/></svg>
+              </button>
+              <button type="button" class="easter-egg-play-btn" id="easter-egg-play" aria-label="Play">
+                <svg class="easter-egg-icon-play" viewBox="0 0 24 24" width="28" height="28" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="easter-egg-icon-pause hidden" viewBox="0 0 24 24" width="28" height="28" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+              </button>
+              <button type="button" class="easter-egg-track-btn" id="easter-egg-next" aria-label="Next song">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="easter-egg-queue-sheet" id="easter-egg-queue-sheet">
+            <div class="easter-egg-queue-handle" id="easter-egg-queue-handle" role="button" tabindex="0" aria-expanded="false" aria-label="Show playlist">
+              <span class="easter-egg-queue-handle-bar" aria-hidden="true"></span>
+            </div>
+            <div class="easter-egg-playlist-wrap" id="easter-egg-playlist-wrap">
+              <div class="easter-egg-playlist-label">Playlist</div>
+              <div class="easter-egg-playlist" id="easter-egg-playlist"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <audio id="easter-egg-audio" preload="auto"></audio>
+    </div>
+  </div>
+
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

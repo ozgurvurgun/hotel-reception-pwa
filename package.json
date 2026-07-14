@@ -1,0 +1,27 @@
+{
+  "name": "golden-gate-reception",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:init": "wrangler d1 execute golden-gate-db --local --file=./schema.sql",
+    "db:migrate": "wrangler d1 execute golden-gate-db --local --file=./migrations/002_walk_in.sql && wrangler d1 execute golden-gate-db --local --file=./migrations/003_permissions.sql",
+    "db:init:remote": "wrangler d1 execute golden-gate-db --remote --file=./schema.sql",
+    "setup": "node scripts/setup.js",
+    "generate:icons": "node scripts/generate-icons.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@pushforge/builder": "^2.0.5",
+    "hono": "^4.12.29",
+    "jose": "^6.2.3"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260702.1",
+    "sharp": "^0.35.3",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.86.0"
+  }
+}

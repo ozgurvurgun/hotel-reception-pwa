@@ -1,0 +1,5 @@
+# Local Worker secrets (never commit this file as .dev.vars)
+
+ROOT_PASSWORD=change-me
+JWT_SECRET=replace-with-a-long-random-string
+VAPID_PRIVATE_KEY=replace-with-your-vapid-private-key
