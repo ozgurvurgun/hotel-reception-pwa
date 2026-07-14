@@ -206,8 +206,8 @@ Caching full `.m4a` files in the Cache API **breaks seeking on Android Chrome** 
 ### 1. Clone & install
 
 ```bash
-git clone https://github.com/YOUR_USER/hatun-otel-app.git
-cd hatun-otel-app
+git clone https://github.com/ozgurvurgun/hotel-reception-pwa.git
+cd hotel-reception-pwa
 npm install
 ```
 
